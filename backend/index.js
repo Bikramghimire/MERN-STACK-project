@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const todoRoute = require("./routes/todo.route");
+const signUpRoute = require("./routes/signup.route");
+const { signInUser } = require("./controllers/signin.controller");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -18,6 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/todos", todoRoute);
+app.use("/api/signup", signUpRoute);
+app.use("/api/signin", signInUser);
 app.use(async (req, res, next) => {
   const error = new Error("Not Found");
   res.status(404).send({ message: error.message });
