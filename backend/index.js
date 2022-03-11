@@ -18,6 +18,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/todos", todoRoute);
+app.use(async (req, res, next) => {
+  const error = new Error("Not Found");
+  res.status(404).send({ message: error.message });
+});
 
 app.listen(Port, () => {
   console.log(`server is running to the port ${Port}`);
