@@ -1,6 +1,7 @@
 const Joi = require("Joi");
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   signUpUser: async (req, res) => {
@@ -27,9 +28,15 @@ module.exports = {
         password: await bcrypt.hash(password, 10),
       });
       await user.save();
-      res.status(200).send({ message: "user is created successfully" });
+      const secretKey = process.env.SECRET_KEY;
+      const token = jwt.sign(
+        { _id: user._id, name: user.name, email: user.email },
+        secretKey
+      );
+
+      res.status(200).send(token);
     } catch (error) {
-      res.status(500).send({ message: error });
+      res.status(500).send({ message: "wejgtejw" });
     }
   },
 };

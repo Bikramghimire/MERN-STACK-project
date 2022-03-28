@@ -7,6 +7,7 @@ const { signInUser } = require("./controllers/signin.controller");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 require("dotenv").config();
 const mongoDB_URL = process.env.MONGO_URL;
 const Port = process.env.PORT || 5000;
